@@ -72,6 +72,7 @@ $(document).ready(function() {
 
     var gameMaker = function() {
         self = this;
+<<<<<<< HEAD
         this.blockCounter = 0;
 
         this.makeBlock = function() {
@@ -81,6 +82,15 @@ $(document).ready(function() {
 
         // this.
 
+=======
+        this.wallCounter = 0;
+        
+        this.makeWall = function() {
+            self.wallCounter++;
+            $('.blockContainer').append('<div class="block" id="block'+self.wallCounter+'"></div>');
+        };
+
+>>>>>>> dc787475eef30ddc333f17e1722164f2a8388a8b
     };
 
 
@@ -100,7 +110,11 @@ $(document).ready(function() {
     keyListener.register_combo({
         "keys"              : "t",
         "prevent_repeat"    : true,
+<<<<<<< HEAD
         "on_keydown"        : function(){game.makeBlock();}
+=======
+        "on_keydown"        : function(){game.makeWall();}
+>>>>>>> dc787475eef30ddc333f17e1722164f2a8388a8b
     });
 
 });
