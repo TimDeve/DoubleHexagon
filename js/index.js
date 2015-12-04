@@ -70,8 +70,35 @@ $(document).ready(function() {
     };
 
 
+    var gameMaker = function() {
+        self = this;
+        this.wallCounter = 0;
+        
+        this.makeWall = function() {
+            self.wallCounter++;
+            $('.blockContainer').append('<div class="block" id="block'+self.wallCounter+'"></div>');
+        };
+
+    };
+
+
+
+
+
+
     // Initialise
+    var game = new gameMaker();
     var player1 = new triangleMaker(1);
     player1.buildControl();
+
+
+
+
+
+    keyListener.register_combo({
+        "keys"              : "t",
+        "prevent_repeat"    : true,
+        "on_keydown"        : function(){game.makeWall();}
+    });
 
 });
