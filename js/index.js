@@ -71,26 +71,37 @@ $(document).ready(function() {
 
 
     var gameMaker = function() {
-        self = this;
-<<<<<<< HEAD
+        var self = this;
+        var wallArray = [0,0,0,0,0,0];
         this.blockCounter = 0;
+
 
         this.makeBlock = function() {
             self.blockCounter++;
             $('.blockContainer').append('<div class="block" id="block'+self.blockCounter+'"></div>');
         };
 
-        // this.
+        this.createWall = function(){
 
-=======
-        this.wallCounter = 0;
-        
-        this.makeWall = function() {
-            self.wallCounter++;
-            $('.blockContainer').append('<div class="block" id="block'+self.wallCounter+'"></div>');
+            for (i=0; i<wallArray.length; i++) {
+
+                random = Math.random();
+                if (random > 0.66) {
+                    wallArray[i] = 1;
+                }
+                 
+            }
+
+            for(i = 0; i < wallArray.length; ++i) {
+              if(wallArray[i] !== 0) {
+                var wallPick = parseInt(Math.random() * 6);
+                console.log(wallArray);
+                wallArray[wallPick] = 0;
+                console.log(wallArray);
+              }
+            }
         };
 
->>>>>>> dc787475eef30ddc333f17e1722164f2a8388a8b
     };
 
 
@@ -110,11 +121,7 @@ $(document).ready(function() {
     keyListener.register_combo({
         "keys"              : "t",
         "prevent_repeat"    : true,
-<<<<<<< HEAD
-        "on_keydown"        : function(){game.makeBlock();}
-=======
-        "on_keydown"        : function(){game.makeWall();}
->>>>>>> dc787475eef30ddc333f17e1722164f2a8388a8b
+        "on_keydown"        : function(){game.createWall();}
     });
 
 });
