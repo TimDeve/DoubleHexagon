@@ -82,25 +82,33 @@ $(document).ready(function() {
         };
 
         this.createWall = function(){
+          wallArray = [0,0,0,0,0,0];
+          var wallFullCounter = 0;
 
             for (i=0; i<wallArray.length; i++) {
 
                 random = Math.random();
-                if (random > 0.66) {
+                if (random < 0.66) {
                     wallArray[i] = 1;
                 }
                  
             }
 
-            for(i = 0; i < wallArray.length; ++i) {
-              if(wallArray[i] !== 0) {
+
+            for(i = 0; i < wallArray.length; i++) {
+
+              if(wallArray[i] === 1) {
+                wallFullCounter++;
+              }
+
+              if(wallFullCounter >= 6) {
                 var wallPick = parseInt(Math.random() * 6);
-                console.log(wallArray);
                 wallArray[wallPick] = 0;
-                console.log(wallArray);
               }
             }
+
         };
+
 
     };
 
