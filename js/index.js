@@ -72,12 +72,14 @@ $(document).ready(function() {
 
     var gameMaker = function() {
         self = this;
-        this.wallCounter = 0;
-        
-        this.makeWall = function() {
-            self.wallCounter++;
-            $('.blockContainer').append('<div class="block" id="block'+self.wallCounter+'"></div>');
+        this.blockCounter = 0;
+
+        this.makeBlock = function() {
+            self.blockCounter++;
+            $('.blockContainer').append('<div class="block" id="block'+self.blockCounter+'"></div>');
         };
+
+        // this.
 
     };
 
@@ -98,7 +100,7 @@ $(document).ready(function() {
     keyListener.register_combo({
         "keys"              : "t",
         "prevent_repeat"    : true,
-        "on_keydown"        : function(){game.makeWall();}
+        "on_keydown"        : function(){game.makeBlock();}
     });
 
 });
