@@ -17,10 +17,10 @@ $(function () {
             var anim;
             
             anim = setInterval(function() {
-                if(degree < 0) {
+                if(player1.degree < 0) {
                     player1.degree = 359;
                 }
-                else if (degree > 360) {
+                else if (player1.degree > 360) {
                     player1.degree = 1;
                 }
 
@@ -29,10 +29,10 @@ $(function () {
                 });
 
                 if (cwOrCcw === "right") {
-                    degree++;
+                    player1.degree++;
                 }
                 else if (cwOrCcw === "left") {
-                    degree--;
+                    player1.degree--;
                 }
                 
             }, 1);
@@ -54,14 +54,14 @@ $(function () {
                 "keys"              : "g",
                 "prevent_repeat"    : true,
                 "on_keydown"        : function(){player1.rotate("left");},
-                "on_keyup"          : function(){clearInterval(player1.animateLeft);}
+                "on_keyup"          : function(){clearInterval(animateLeft);}
             });
 
             keyListener.register_combo({
                 "keys"              : "h",
                 "prevent_repeat"    : true,
                 "on_keydown"        : function(){player1.rotate("right");},
-                "on_keyup"          : function(){clearInterval(player1.animateRight);}
+                "on_keyup"          : function(){clearInterval(animateRight);}
             });
 
         };
