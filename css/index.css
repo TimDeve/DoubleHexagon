@@ -4,7 +4,8 @@
   background: url("../img/background.svg");
   width: 1024px;
   height: 768px;
-  margin: 25% auto 0 auto;
+  margin: 0 auto 0 auto;
+  transform: scale(0.75);
 }
 
 .centerHexagon {
