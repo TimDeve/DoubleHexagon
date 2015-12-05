@@ -7,6 +7,7 @@ $(document).ready(function() {
 		var self = this;
 		this.el = $(".triangle"+player);
 		this.degree = 0;
+		this.isLost = false;
 		var animateLeft;
 		var animateRight;
 
@@ -138,8 +139,11 @@ $(document).ready(function() {
 			setTimeout(function() {
 				var playerPosition = player1.degree;
 				if ((player1.degree > startPoint) && (player1.degree < endPoint)) {
-					alert('You lose'+blockIndex);
-					clearInterval(self.nowPlayingInterval);
+					if (!self.isLost) {
+						self.isLost = true;
+						alert('You lose'+blockIndex);
+						clearInterval(self.nowPlayingInterval);
+					}
 				}
 
 			}, 2350);
@@ -167,6 +171,7 @@ $(document).ready(function() {
 
 
 		this.start = function() {
+			self.isLost = false;
 			self.nowPlayingInterval = setInterval(function(){
 				self.spawnWall();
 			}, 1000);
