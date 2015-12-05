@@ -73,12 +73,12 @@ $(document).ready(function() {
 	var gameMaker = function() {
 		var self = this;
 		var wallArray = [0,0,0,0,0,0];
-		this.blockCounter = 0;
+		this.blockCounter = 1;
 
 
 		this.makeBlock = function() {
-			self.blockCounter++;
-			$('.blockContainer').append('<div class="block" id="block'+self.blockCounter+'"></div>');
+			// self.blockCounter++;
+			$('.blockContainer').append('<div style="left:285px" class="block" id="block'+self.blockCounter+'"></div>');
 		};
 
 		this.createWall = function(){
@@ -172,13 +172,13 @@ $(document).ready(function() {
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){
 			$("#block1").animate({
-				"top": "500px",
-				"left": "500px",
-				"height": "0",
+				"top": "384px",
+				"left": "512px",
+				"height": "15px",
 				"width": "0"
 			},
 				3000, function() {
-				alert('test');
+				$("#block1").remove();
 			});
 		}
 
