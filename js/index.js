@@ -12,6 +12,7 @@ $(document).ready(function() {
 		var animateRight; // variable to store setInterval so it can be killed later
 
 
+		// function that create the element that represent the player
 		this.createTriangle = function() {
 			var className;
 			if (player === 1) {
@@ -22,6 +23,8 @@ $(document).ready(function() {
 			}
 			$(".mainContainer").append('<div class="triangles '+ className +'"></div>');
 		};
+
+
 		// function that rotate the triangle takes one argument:
 		// **cwOrCcw: rotate clock wise or anti clock wise takes "cw" or "acw"
 		this.rotate = function(cwOrAcw) {
@@ -104,7 +107,8 @@ $(document).ready(function() {
 		var self = this;
 		this.blockCounter = 0; // Counter so there is no conflict between block ID
 		this.nowPlayingInterval = null; // Variable that will store the setInterval that create the blocks
-		this.nowPlaying = false; // Variable that determine if the game is currently running 
+		this.nowPlaying = false; // Variable that determine if the game is currently running
+		this.multiPlayer = false;
 
 
 		// Makes new block
@@ -167,16 +171,54 @@ $(document).ready(function() {
 			var endPoint = startPoint + 60; // use the previous variable to determine the end of the surface that block will cover
 
 			setTimeout(function() {
-				var playerPosition = player1.degree;
-				if ((player1.degree >= startPoint) && (player1.degree <= endPoint)) {
-					if (!self.isLost) {
+				var player1Position = player1.degree;
+				var player2Position = player2.degree;
+				var playerLose = 0;
+
+				if (!self.isLost) {
+					if (self.multiPlayer) {// Check if in multiplayer mode 
+
+						if (( (player1.degree >= startPoint) && (player1.degree <= endPoint) ) && (player2.degree >= startPoint) && (player2.degree <= endPoint)) {
+							playerLose = 3; // set playerLose to 3 if both player lose
+						}
+
+						else if ((player1.degree >= startPoint) && (player1.degree <= endPoint)) {
+							playerLose = 1;// set playerLose to 1 if player 1 loses
+						}
+
+						else if ((player2.degree >= startPoint) && (player2.degree <= endPoint)) {
+							playerLose = 2;// set playerLose to 2 if player 1 loses
+						}
+
+					}
+
+					else {
+						if ((player1.degree >= startPoint) && (player1.degree <= endPoint)) {
+							playerLose = 1;// set playerLose to 1 if player 1 loses
+						}
+					}
+
+					if (playerLose !== 0) {
 						self.isLost = true;
 						self.nowPlaying = false;
 						$(".triangles").remove();
 						$(".block").remove();
-						alert('You lose');
+						player1.degree = 0;
+						player2.degree = 0;
 						clearInterval(self.nowPlayingInterval);
+
+						if (playerLose === 3) {
+							alert('You both lose');
+						}
+						else if (playerLose === 1) {
+							alert('Player 1 loses');
+						}
+						else if (playerLose === 2) {
+							alert('Player 2 loses');
+						}
+						
 					}
+					
 				}
 
 			}, 2350);
@@ -230,6 +272,7 @@ $(document).ready(function() {
 	// Initialise
 	var game = new gameMaker(); // makes the game
 	var player1 = new triangleMaker(1); // make player one
+	var player2 = new triangleMaker(2); // make player two
 
 
 
@@ -257,6 +300,18 @@ $(document).ready(function() {
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){
 			player1.createTriangle();
+			game.multiPlayer = false;
+			game.start();
+		}
+	});
+
+	keyListener.register_combo({
+		"keys"              : "q",
+		"prevent_repeat"    : true,
+		"on_keydown"        : function(){
+			player1.createTriangle();
+			player2.createTriangle();
+			game.multiPlayer = true;
 			game.start();
 		}
 	});

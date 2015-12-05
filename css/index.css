@@ -54,7 +54,11 @@ body {
 }
 
 .triangle1 {
-  border-right: 10px solid #FFAAAA;
+  border-right: 10px solid rgba(255,170,170, 0.9);
+}
+
+.triangle2 {
+  border-right: 10px solid rgba(255,102,102, 0.9);
 }
 
 .blockContainer {
