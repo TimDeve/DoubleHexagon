@@ -159,7 +159,7 @@ $(document).ready(function() {
 
 
 
-
+	// testing
 
 	keyListener.register_combo({
 		"keys"              : "t",
@@ -172,6 +172,23 @@ $(document).ready(function() {
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){
 			$("#block1").animate({
+				"top": "384px",
+				"left": "512px",
+				"height": "15px",
+				"width": "0"
+			},
+				3000, function() {
+				$("#block1").remove();
+			});
+		}
+
+	});
+
+	keyListener.register_combo({
+		"keys"              : "u",
+		"prevent_repeat"    : true,
+		"on_keydown"        : function(){
+			$("#block1").velocity({
 				"top": "384px",
 				"left": "512px",
 				"height": "15px",
