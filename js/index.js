@@ -78,7 +78,7 @@ $(document).ready(function() {
 
 		this.makeBlock = function() {
 			// self.blockCounter++;
-			$('.blockContainer').append('<div style="left:285px" class="block" id="block'+self.blockCounter+'"></div>');
+			$('.blockContainer').append('<img src="img/blockOrigin.svg" class="block blockPosition5" id="block'+self.blockCounter+'">');
 		};
 
 		this.createWall = function(){
@@ -109,35 +109,36 @@ $(document).ready(function() {
 
 		};
 
-		// this.animateBlock = function(blockIndex) {
-		// 	var startPoint;
-		// 	var endPoint = 0;
-		// 	var thisId = "#block"+blockIndex;
-		// 	switch(blockIndex) {
-		// 		case 1:
-		// 			$("#block"+blockIndex)
-		// 			break;
-		// 		case 1:
-		// 			statements_1
-		// 			break;
-		// 		case 2:
-		// 			statements_1
-		// 			break;
-		// 		case 3:
-		// 			statements_1
-		// 			break;
-		// 		case 4:
-		// 			statements_1
-		// 			break;
-		// 		case 5:
-		// 			statements_1
-		// 			break;
-		// 		default:
-		// 			statements_def
-		// 			break;
-		// 	}
+		this.animateBlock = function(blockIndex, blockNumber) {
+			var startPoint= blockIndex * 60;
+			var endPoint = startPoint + 60;
+			var thisId = "#block"+blockNumber;
+			console.log(thisId);
+			// switch(blockIndex) {
+			// 	case 0:
+			// 		$("#block"+blockIndex)
+			// 		break;
+			// 	case 1:
+			// 		statements_1
+			// 		break;
+			// 	case 2:
+			// 		statements_1
+			// 		break;
+			// 	case 3:
+			// 		statements_1
+			// 		break;
+			// 	case 4:
+			// 		statements_1
+			// 		break;
+			// 	case 5:
+			// 		statements_1
+			// 		break;
+			// 	default:
+			// 		statements_def
+			// 		break;
+			// }
 
-		// };
+		};
 
 		this.spawnWall = function() {
 			self.createWall();
@@ -160,6 +161,12 @@ $(document).ready(function() {
 
 
 	// testing
+	game.makeBlock();
+	keyListener.register_combo({
+		"keys"              : "r",
+		"prevent_repeat"    : true,
+		"on_keydown"        : function(){game.animateBlock(0, 33);}
+	});
 
 	keyListener.register_combo({
 		"keys"              : "t",
@@ -171,27 +178,10 @@ $(document).ready(function() {
 		"keys"              : "y",
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){
-			$("#block1").animate({
-				"top": "384px",
-				"left": "512px",
-				"height": "15px",
-				"width": "0"
-			},
-				3000, function() {
-				$("#block1").remove();
-			});
-		}
-
-	});
-
-	keyListener.register_combo({
-		"keys"              : "u",
-		"prevent_repeat"    : true,
-		"on_keydown"        : function(){
 			$("#block1").velocity({
 				"top": "384px",
 				"left": "512px",
-				"height": "15px",
+				"height": "30px",
 				"width": "0"
 			},
 				3000, function() {
@@ -200,5 +190,7 @@ $(document).ready(function() {
 		}
 
 	});
+
+	
 
 });

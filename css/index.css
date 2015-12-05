@@ -4,7 +4,7 @@
   background: url("../img/background.svg");
   width: 1024px;
   height: 768px;
-  margin: 50px auto 0 auto;
+  margin: 25% auto 0 auto;
 }
 
 .centerHexagon {
@@ -36,18 +36,40 @@
 
 .block {
   position: absolute;
-  width: 455px;
-  height: 30px;
-  background-color: tomato;
-  background: url("../img/block.svg");
 }
 
 
-@keyframes anim {
-  0%   { top: 0; left: 0}
-  100% { top: 500px; left: 500px}
+.blockPosition0 {
+  left: 110px;
+  top: -300px;
 }
 
-.animate {
-  animation: anim 5s;
+.blockPosition1 {
+  left: 700px;
+  top: 20px;
+  transform: rotate(60deg);
+}
+
+.blockPosition2 {
+  left: 700px;
+  top: 700px;
+  transform: rotate(120deg);
+}
+
+.blockPosition3 {
+  left: 100px;
+  top: 950px;
+  transform: rotate(180deg);
+}
+
+.blockPosition4 {
+  left: -500px;
+  top: 680px;
+  transform: rotate(240deg);
+}
+
+.blockPosition5 {
+  left: -500px;
+  top: 15px;
+  transform: rotate(300deg);
 }
