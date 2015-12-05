@@ -1,3 +1,7 @@
+body {
+  background: black;
+}
+
 .mainContainer {
   position: relative;
   background-color: darkgrey;
@@ -5,7 +9,9 @@
   width: 1024px;
   height: 768px;
   margin: 0 auto 0 auto;
+  border-radius: 50px;
   transform: scale(0.75);
+  overflow: hidden;
 }
 
 .centerHexagon {
@@ -21,14 +27,14 @@
 
 .triangle1 {
   position: absolute;
-  top: 314px;
-  left: 502px;
+  top: 374px;
+  left: 442px;
   width: 0; 
   height: 0; 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid dodgerblue;
-  transform-origin:10px 70px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid dodgerblue;
+  transform-origin:70px 10px;
 }
 
 .blockContainer {
@@ -40,38 +46,37 @@
   fill: white;
 }
 
-
 .blockPosition0 {
+  left: -500px;
+  top: 15px;
+  transform: rotate(300deg);
+}
+
+.blockPosition1 {
   left: 110px;
   top: -300px;
 }
 
-.blockPosition1 {
+.blockPosition2 {
   left: 700px;
   top: 20px;
   transform: rotate(60deg);
 }
 
-.blockPosition2 {
+.blockPosition3 {
   left: 700px;
   top: 700px;
   transform: rotate(120deg);
 }
 
-.blockPosition3 {
+.blockPosition4 {
   left: 100px;
   top: 950px;
   transform: rotate(180deg);
 }
 
-.blockPosition4 {
+.blockPosition5 {
   left: -500px;
   top: 680px;
   transform: rotate(240deg);
-}
-
-.blockPosition5 {
-  left: -500px;
-  top: 15px;
-  transform: rotate(300deg);
 }

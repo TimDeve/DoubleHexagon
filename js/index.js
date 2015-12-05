@@ -69,6 +69,8 @@ $(document).ready(function() {
 		
 	};
 
+	// End of Function to build object triangle
+
 
 
 
@@ -115,8 +117,6 @@ $(document).ready(function() {
 
 		this.animateBlock = function(blockIndex, blockNumber) {
 			var thisId = "#block"+blockNumber;
-			console.log(thisId);
-			
 			
 			$(thisId).velocity({
 				"top": "384px",
@@ -125,20 +125,20 @@ $(document).ready(function() {
 				"width": "0"
 			},
 				3000, function() {
-				$(thisId).remove();
+				$(thisId).remove(); //removes created block
 			});
 
 		};
 
 
 		this.checkCollision = function(blockIndex) {
-			var startPoint= blockIndex * 60 - 30;
+			var startPoint= blockIndex * 60;
 			var endPoint = startPoint + 60;
-			console.log(startPoint + " " + endPoint);
+
 			setTimeout(function() {
 				var playerPosition = player1.degree;
 				if ((player1.degree > startPoint) && (player1.degree < endPoint)) {
-					alert('You lose');
+					alert('You lose'+blockIndex);
 					clearInterval(self.nowPlayingInterval);
 				}
 
@@ -156,10 +156,11 @@ $(document).ready(function() {
 					var thisBlock = self.blockCounter;
 
 					self.makeBlock(i, thisBlock);
-
+					
 					self.animateBlock(i, thisBlock);
 
 					self.checkCollision(i);
+					
 				}
 			}
 		};
@@ -174,7 +175,7 @@ $(document).ready(function() {
 
 
 	};
-
+	// end of builder function to creat game object
 	
 	
 
