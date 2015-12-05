@@ -5,12 +5,23 @@ $(document).ready(function() {
 	// Function to build object triangle for player 1 or 2
 	var triangleMaker = function(player) {
 		var self = this;
-		this.el = $(".triangle"+player); // variable to store the element that reprsent the player
+		// this.el = $(".triangle"+player); // variable to store the element that reprsent the player
 		this.degree = 0; // variable that store the current position of the triangle
 		this.isLost = false; // variable to turn to true when the game is lost
 		var animateLeft; // variable to store setInterval so it can be killed later
 		var animateRight; // variable to store setInterval so it can be killed later
-		
+
+
+		this.createTriangle = function() {
+			var className;
+			if (player === 1) {
+				className = "triangle1";
+			}
+			else if (player === 2) {
+				className = "triangle2";
+			}
+			$(".mainContainer").append('<div class="triangles '+ className +'"></div>');
+		};
 		// function that rotate the triangle takes one argument:
 		// **cwOrCcw: rotate clock wise or anti clock wise takes "cw" or "acw"
 		this.rotate = function(cwOrAcw) {
@@ -25,7 +36,7 @@ $(document).ready(function() {
 					self.degree = 1;
 				}
 
-				self.el.css({
+				$(".triangle"+player).css({
 					WebkitTransform: 'rotate(' + self.degree + 'deg)'
 				});
 
@@ -98,7 +109,7 @@ $(document).ready(function() {
 
 		// Makes new block
 		this.makeBlock = function(position, blockId) {
-			$('.blockContainer').append('<img src="img/blockOrigin.svg" class="block blockPosition'+position+'"" id="block'+blockId+'">');
+			$('.blockContainer').append('<img src="img/blockOrigin.svg" class="block blockPosition' + position + '"" id="block' + blockId + '">');
 		};
 
 
@@ -161,6 +172,8 @@ $(document).ready(function() {
 					if (!self.isLost) {
 						self.isLost = true;
 						self.nowPlaying = false;
+						$(".triangles").remove();
+						$(".block").remove();
 						alert('You lose');
 						clearInterval(self.nowPlayingInterval);
 					}
@@ -242,7 +255,10 @@ $(document).ready(function() {
 	keyListener.register_combo({
 		"keys"              : "s",
 		"prevent_repeat"    : true,
-		"on_keydown"        : function(){game.start();}
+		"on_keydown"        : function(){
+			player1.createTriangle();
+			game.start();
+		}
 	});
 
 	keyListener.register_combo({
