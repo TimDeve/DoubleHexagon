@@ -72,17 +72,16 @@ $(document).ready(function() {
 
 	var gameMaker = function() {
 		var self = this;
-		var wallArray = [0,0,0,0,0,0];
-		this.blockCounter = 1;
+		this.blockCounter = 0;
 
 
-		this.makeBlock = function() {
-			// self.blockCounter++;
-			$('.blockContainer').append('<img src="img/blockOrigin.svg" class="block blockPosition5" id="block'+self.blockCounter+'">');
+		this.makeBlock = function(position, blockId) {
+			$('.blockContainer').append('<img src="img/blockOrigin.svg" class="block blockPosition'+position+'"" id="block'+blockId+'">');
 		};
 
+
 		this.createWall = function(){
-			wallArray = [0,0,0,0,0,0];
+			var wallArray = [0,0,0,0,0,0];
 			var wallFullCounter = 0;
 
 				for (i=0; i<wallArray.length; i++) {
@@ -106,49 +105,62 @@ $(document).ready(function() {
 						wallArray[wallPick] = 0;
 					}
 				}
-
+				return wallArray;
 		};
+
 
 		this.animateBlock = function(blockIndex, blockNumber) {
-			var startPoint= blockIndex * 60;
-			var endPoint = startPoint + 60;
 			var thisId = "#block"+blockNumber;
 			console.log(thisId);
-			// switch(blockIndex) {
-			// 	case 0:
-			// 		$("#block"+blockIndex)
-			// 		break;
-			// 	case 1:
-			// 		statements_1
-			// 		break;
-			// 	case 2:
-			// 		statements_1
-			// 		break;
-			// 	case 3:
-			// 		statements_1
-			// 		break;
-			// 	case 4:
-			// 		statements_1
-			// 		break;
-			// 	case 5:
-			// 		statements_1
-			// 		break;
-			// 	default:
-			// 		statements_def
-			// 		break;
-			// }
+			
+			
+			$(thisId).velocity({
+				"top": "384px",
+				"left": "512px",
+				"height": "30px",
+				"width": "0"
+			},
+				3000, function() {
+				$(thisId).remove();
+			});
 
 		};
+
+
+		this.checkCollision = function(blockIndex) {
+			var startPoint= blockIndex * 60 - 30;
+			var endPoint = startPoint + 60;
+			console.log(startPoint + " " + endPoint);
+			setTimeout(function() {
+				var playerPosition = player1.degree;
+				if ((player1.degree > startPoint) && (player1.degree < endPoint)) {
+					alert("you lose");
+				}
+
+			}, 2350);
+		};
+
 
 		this.spawnWall = function() {
-			self.createWall();
+			var wallArray = self.createWall();
 
+			for (i = 0; i < wallArray.length; i++) {
+
+				if (wallArray[i] === 1) {
+					self.blockCounter++;
+					var thisBlock = self.blockCounter;
+
+					self.makeBlock(i, thisBlock);
+
+					self.animateBlock(i, thisBlock);
+
+					self.checkCollision(i);
+				}
+			}
 		};
-
-
 	};
 
-
+	
 
 
 
@@ -161,7 +173,12 @@ $(document).ready(function() {
 
 
 	// testing
-	game.makeBlock();
+	keyListener.register_combo({
+		"keys"              : "e",
+		"prevent_repeat"    : true,
+		"on_keydown"        : function(){game.spawnWall()	;}
+	});
+
 	keyListener.register_combo({
 		"keys"              : "r",
 		"prevent_repeat"    : true,
@@ -171,7 +188,7 @@ $(document).ready(function() {
 	keyListener.register_combo({
 		"keys"              : "t",
 		"prevent_repeat"    : true,
-		"on_keydown"        : function(){game.makeBlock();}
+		"on_keydown"        : function(){game.makeBlock(0);}
 	});
 
 	keyListener.register_combo({
