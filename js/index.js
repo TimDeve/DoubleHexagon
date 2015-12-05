@@ -109,34 +109,35 @@ $(document).ready(function() {
 
 		};
 
-		this.animateBlock = function(blockIndex) {
-			var startPoint;
-			var endPoint = 0;
-			switch(blockIndex) {
-				case 1:
-					statements_1
-					break;
-				case 1:
-					statements_1
-					break;
-				case 2:
-					statements_1
-					break;
-				case 3:
-					statements_1
-					break;
-				case 4:
-					statements_1
-					break;
-				case 5:
-					statements_1
-					break;
-				default:
-					statements_def
-					break;
-			}
+		// this.animateBlock = function(blockIndex) {
+		// 	var startPoint;
+		// 	var endPoint = 0;
+		// 	var thisId = "#block"+blockIndex;
+		// 	switch(blockIndex) {
+		// 		case 1:
+		// 			$("#block"+blockIndex)
+		// 			break;
+		// 		case 1:
+		// 			statements_1
+		// 			break;
+		// 		case 2:
+		// 			statements_1
+		// 			break;
+		// 		case 3:
+		// 			statements_1
+		// 			break;
+		// 		case 4:
+		// 			statements_1
+		// 			break;
+		// 		case 5:
+		// 			statements_1
+		// 			break;
+		// 		default:
+		// 			statements_def
+		// 			break;
+		// 	}
 
-		};
+		// };
 
 		this.spawnWall = function() {
 			self.createWall();
@@ -163,7 +164,24 @@ $(document).ready(function() {
 	keyListener.register_combo({
 		"keys"              : "t",
 		"prevent_repeat"    : true,
-		"on_keydown"        : function(){game.createWall();}
+		"on_keydown"        : function(){game.makeBlock();}
+	});
+
+	keyListener.register_combo({
+		"keys"              : "y",
+		"prevent_repeat"    : true,
+		"on_keydown"        : function(){
+			$("#block1").animate({
+				"top": "500px",
+				"left": "500px",
+				"height": "0",
+				"width": "0"
+			},
+				3000, function() {
+				alert('test');
+			});
+		}
+
 	});
 
 });
