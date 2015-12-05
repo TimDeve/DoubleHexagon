@@ -70,9 +70,13 @@ $(document).ready(function() {
 	};
 
 
+
+
+	// Builder function to create game object
 	var gameMaker = function() {
 		var self = this;
 		this.blockCounter = 0;
+		this.nowPlayingInterval = null;
 
 
 		this.makeBlock = function(position, blockId) {
@@ -134,7 +138,8 @@ $(document).ready(function() {
 			setTimeout(function() {
 				var playerPosition = player1.degree;
 				if ((player1.degree > startPoint) && (player1.degree < endPoint)) {
-					alert("you lose");
+					alert('You lose');
+					clearInterval(self.nowPlayingInterval);
 				}
 
 			}, 2350);
@@ -158,10 +163,20 @@ $(document).ready(function() {
 				}
 			}
 		};
+
+
+		this.start = function() {
+			self.nowPlayingInterval = setInterval(function(){
+				self.spawnWall();
+			}, 1000);
+		};
+
+
+
 	};
 
 	
-
+	
 
 
 
@@ -176,7 +191,7 @@ $(document).ready(function() {
 	keyListener.register_combo({
 		"keys"              : "e",
 		"prevent_repeat"    : true,
-		"on_keydown"        : function(){game.spawnWall()	;}
+		"on_keydown"        : function(){game.start();}
 	});
 
 	keyListener.register_combo({
