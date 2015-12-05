@@ -1,5 +1,21 @@
 body {
   background: black;
+  font-family: sans-serif;
+}
+
+@keyframes hue-rotate {
+  from {
+    -webkit-filter: hue-rotate(0);
+    -moz-filter: hue-rotate(0);
+    -ms-filter: hue-rotate(0);
+    filter: hue-rotate(0);
+  }
+  to {
+    -webkit-filter: hue-rotate(360deg);
+    -moz-filter: hue-rotate(360deg);
+    -ms-filter: hue-rotate(360deg);
+    filter: hue-rotate(360deg);
+  }
 }
 
 .mainContainer {
@@ -11,6 +27,7 @@ body {
   margin: 0 auto 0 auto;
   border-radius: 50px;
   transform: scale(0.75);
+  animation: hue-rotate 10s linear infinite;
   overflow: hidden;
 }
 
@@ -33,7 +50,7 @@ body {
   height: 0; 
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-right: 10px solid #FF0000;
+  border-right: 10px solid #FFAAAA;
   transform-origin:70px 10px;
 }
 
@@ -47,7 +64,7 @@ body {
 }
 
 .blockPosition0 {
-  left: -500px;
+  left: -480px;
   top: 15px;
   transform: rotate(300deg);
 }
@@ -58,25 +75,31 @@ body {
 }
 
 .blockPosition2 {
-  left: 700px;
-  top: 20px;
+  left: 690px;
+  top: 25px;
   transform: rotate(60deg);
 }
 
 .blockPosition3 {
-  left: 700px;
-  top: 700px;
-  transform: rotate(120deg);
+  left: 690px;
+  top: 680px;
+  transform: rotate(122deg);
 }
 
 .blockPosition4 {
   left: 100px;
-  top: 950px;
+  top: 1000px;
   transform: rotate(180deg);
 }
 
 .blockPosition5 {
-  left: -500px;
+  left: -490px;
   top: 680px;
   transform: rotate(240deg);
+}
+
+.instruction {
+  margin: 0 auto 0 auto;
+  width: 768px;
+  color: white;
 }

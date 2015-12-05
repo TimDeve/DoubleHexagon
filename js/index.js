@@ -80,6 +80,7 @@ $(document).ready(function() {
 		var self = this;
 		this.blockCounter = 0;
 		this.nowPlayingInterval = null;
+		this.nowPlaying = false;
 
 
 		this.makeBlock = function(position, blockId) {
@@ -141,6 +142,7 @@ $(document).ready(function() {
 				if ((player1.degree > startPoint) && (player1.degree < endPoint)) {
 					if (!self.isLost) {
 						self.isLost = true;
+						self.nowPlaying = false;
 						alert('You lose'+blockIndex);
 						clearInterval(self.nowPlayingInterval);
 					}
@@ -171,10 +173,13 @@ $(document).ready(function() {
 
 
 		this.start = function() {
-			self.isLost = false;
-			self.nowPlayingInterval = setInterval(function(){
-				self.spawnWall();
-			}, 1000);
+			if (!self.nowPlaying) {
+				self.isLost = false;
+				self.nowPlaying = true;
+				self.nowPlayingInterval = setInterval(function(){
+					self.spawnWall();
+				}, 1000);
+			}
 		};
 
 
@@ -194,8 +199,24 @@ $(document).ready(function() {
 
 
 	// testing
+	var testWall = function(){
+			var wallArray = [1,1,1,1,1,1];
+
+			for (i = 0; i < wallArray.length; i++) {
+
+				if (wallArray[i] === 1) {
+					game.blockCounter++;
+					var thisBlock = game.blockCounter;
+
+					game.makeBlock(i, thisBlock);
+					
+				}
+			}
+		};
+
+	// testWall();
 	keyListener.register_combo({
-		"keys"              : "e",
+		"keys"              : "s",
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){game.start();}
 	});
@@ -216,15 +237,18 @@ $(document).ready(function() {
 		"keys"              : "y",
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){
-			$("#block1").velocity({
-				"top": "384px",
-				"left": "512px",
-				"height": "30px",
-				"width": "0"
-			},
-				3000, function() {
-				$("#block1").remove();
-			});
+			var wallArray = [1,1,1,1,1,1];
+
+			for (i = 0; i < wallArray.length; i++) {
+
+				if (wallArray[i] === 1) {
+					game.blockCounter++;
+					var thisBlock = game.blockCounter;
+
+					game.makeBlock(i, thisBlock);
+					
+				}
+			}
 		}
 
 	});
