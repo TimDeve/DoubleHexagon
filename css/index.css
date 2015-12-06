@@ -1,7 +1,12 @@
+@font-face {
+    font-family: "visitor1";
+    src: url(../fonts/visitor1.ttf) format("truetype");
+}
+
 body {
   background: black;
   color: rgba(255,170,170, 0.9);
-  font-family: sans-serif;
+  font-family: "visitor1",sans-serif;
 }
 
 @keyframes hue-rotate {
