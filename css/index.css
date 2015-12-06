@@ -1,5 +1,6 @@
 body {
   background: black;
+  color: rgba(255,170,170, 0.9);
   font-family: sans-serif;
 }
 
@@ -18,6 +19,51 @@ body {
   }
 }
 
+.mainContainer {
+  position: relative;
+  width: 1024px;
+  height: 768px;
+  margin: 0 auto 0 auto;
+  transform: scale(0.75);
+  border-radius: 50px;
+  overflow: hidden;
+  animation: hue-rotate 10s linear infinite;
+}
+
+.uiContainer {
+  position: absolute;
+  width: 1024px;
+  height: 768px;
+  z-index: 9000;
+}
+
+#title {
+  margin-top: 10%;
+  text-align: center;
+  font-size: 64px;
+}
+
+#buttonContainer {
+  width: 50%;
+  margin:17% auto;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 32px;
+  border: 4px rgba(255,170,170, 0.9) solid;
+  border-radius: 10px;
+}
+
+.buttonLeft {
+  float: left;
+}
+
+.buttonRight {
+  float: right;
+}
+
 .gameContainer {
   position: relative;
   background-color: darkgrey;
@@ -25,10 +71,6 @@ body {
   width: 1024px;
   height: 768px;
   margin: 0 auto 0 auto;
-  border-radius: 50px;
-  transform: scale(0.75);
-  animation: hue-rotate 10s linear infinite;
-  overflow: hidden;
 }
 
 .centerHexagon {
