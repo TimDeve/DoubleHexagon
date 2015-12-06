@@ -18,7 +18,7 @@ body {
   }
 }
 
-.mainContainer {
+.gameContainer {
   position: relative;
   background-color: darkgrey;
   background: url("../img/background.svg");
@@ -58,7 +58,7 @@ body {
 }
 
 .triangle2 {
-  border-right: 10px solid rgba(255,102,102, 0.9);
+  border-left: 10px solid rgba(255,102,102, 0.9);
 }
 
 .blockContainer {

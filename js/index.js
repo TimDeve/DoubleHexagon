@@ -5,9 +5,7 @@ $(document).ready(function() {
 	// Function to build object triangle for player 1 or 2
 	var triangleMaker = function(player) {
 		var self = this;
-		// this.el = $(".triangle"+player); // variable to store the element that reprsent the player
 		this.degree = 0; // variable that store the current position of the triangle
-		this.isLost = false; // variable to turn to true when the game is lost
 		var animateLeft; // variable to store setInterval so it can be killed later
 		var animateRight; // variable to store setInterval so it can be killed later
 
@@ -21,7 +19,7 @@ $(document).ready(function() {
 			else if (player === 2) {
 				className = "triangle2";
 			}
-			$(".mainContainer").append('<div class="triangles '+ className +'"></div>');
+			$(".gameContainer").append('<div class="triangles '+ className +'"></div>');
 		};
 
 
@@ -59,7 +57,6 @@ $(document).ready(function() {
 				animateLeft = anim;
 			}
 
-
 		};
 
 
@@ -70,12 +67,12 @@ $(document).ready(function() {
 
 			if (player === 1 ) {
 
-				leftControl = "d";
-				rightControl = "f";
+				leftControl = "left";
+				rightControl = "right";
 			}
 			else if (player === 2 ) {
-				leftControl = "j";
-				rightControl = "k";
+				leftControl = "d";
+				rightControl = "f";
 			}
 			
 			keyListener.register_combo({
@@ -109,6 +106,7 @@ $(document).ready(function() {
 		this.nowPlayingInterval = null; // Variable that will store the setInterval that create the blocks
 		this.nowPlaying = false; // Variable that determine if the game is currently running
 		this.multiPlayer = false;
+		this.instance = 1;
 
 
 		// Makes new block
@@ -146,6 +144,7 @@ $(document).ready(function() {
 			return wallArray;
 		};
 
+
 		// Function to animate the block to the center then remove them, takes two arguments:
 		// **blockIndex: the position of the block to make, takes a number from 0 to 5
 		// **blockNumber: number to get the ID of the block to animate, takes a number provided earlier by self.blockCounter
@@ -164,18 +163,29 @@ $(document).ready(function() {
 
 		};
 
+
 		// Function that wait a certain amount of time before checking if the triangle is in the same zone as a block, takes one argument:
 		// **blockIndex: the position of the block to check for colision, takes a number from 0 to 5
 		this.checkCollision = function(blockIndex) {
 			var startPoint= blockIndex * 60; // use the index of the block to determine the start of the surface that block will cover
 			var endPoint = startPoint + 60; // use the previous variable to determine the end of the surface that block will cover
 
+			// Closure that keep the current value of self.instance for later
+			var rememberInstance = (function(){
+				var instance = self.instance;
+				return function() {
+					return instance;
+				};
+			})();
+
 			setTimeout(function() {
 				var player1Position = player1.degree;
 				var player2Position = player2.degree;
 				var playerLose = 0;
 
-				if (!self.isLost) {
+				if (rememberInstance() === game.instance) {// Check that the timeout function originated in the current game
+
+
 					if (self.multiPlayer) {// Check if in multiplayer mode 
 
 						if (( (player1.degree >= startPoint) && (player1.degree <= endPoint) ) && (player2.degree >= startPoint) && (player2.degree <= endPoint)) {
@@ -199,7 +209,7 @@ $(document).ready(function() {
 					}
 
 					if (playerLose !== 0) {
-						self.isLost = true;
+						game.instance++;
 						self.nowPlaying = false;
 						$(".triangles").remove();
 						$(".block").remove();
@@ -208,17 +218,18 @@ $(document).ready(function() {
 						clearInterval(self.nowPlayingInterval);
 
 						if (playerLose === 3) {
-							alert('You both lose');
+							$(".instruction").prepend('<h1 class="status">You both lose.</h1>');
 						}
 						else if (playerLose === 1) {
-							alert('Player 1 loses');
+							$(".instruction").prepend('<h1 class="status">Player 1 loses.</h1>');
 						}
 						else if (playerLose === 2) {
-							alert('Player 2 loses');
+							$(".instruction").prepend('<h1 class="status">Player 2 loses.</h1>');
 						}
 						
 					}
 					
+
 				}
 
 			}, 2350);
@@ -247,11 +258,11 @@ $(document).ready(function() {
 			}
 		};
 
+
 		// function that start the game
 		this.start = function() {
 			// check that the game is not already launched
 			if (!self.nowPlaying) {
-				self.isLost = false; // turn of the lost game switch
 				self.nowPlaying = true; // turn on the game is now playing switch
 
 				// start spawning wall every second until it's stopped
@@ -266,13 +277,17 @@ $(document).ready(function() {
 	// end of builder function to creat game object
 	
 	
+	// function that build the interface
+	var uiMaker = function() {
 
+	};
+	// end of function that build the interface
 
 
 	// Initialise
 	var game = new gameMaker(); // makes the game
-	var player1 = new triangleMaker(1); // make player one
-	var player2 = new triangleMaker(2); // make player two
+	var player1 = new triangleMaker(1); // makes player one
+	var player2 = new triangleMaker(2); // makes player two
 
 
 
@@ -300,6 +315,7 @@ $(document).ready(function() {
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){
 			player1.createTriangle();
+			$(".status").remove();
 			game.multiPlayer = false;
 			game.start();
 		}
@@ -311,6 +327,7 @@ $(document).ready(function() {
 		"on_keydown"        : function(){
 			player1.createTriangle();
 			player2.createTriangle();
+			$(".status").remove();
 			game.multiPlayer = true;
 			game.start();
 		}
