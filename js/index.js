@@ -20,6 +20,7 @@ $(document).ready(function() {
 				className = "triangle2";
 			}
 			$(".gameContainer").append('<div class="triangles '+ className +'"></div>');
+			$(".triangle"+player).css({ WebkitTransform: 'rotate(' + self.degree + 'deg)'});
 		};
 
 
@@ -279,17 +280,66 @@ $(document).ready(function() {
 	
 	// function that build the interface
 	var uiMaker = function() {
+		var self = this;
+		this.selectedButton = "left"; // Default selected button
+		this.buttonSelectorInterval = null;
 
+		this.buttonSelector = function() {
+			self.buttonSelectorInterval = setInterval(function(){
+				if ( (player1.degree <= 90) || (player1.degree >= 270) ) {
+					self.selectedButton = "left";
+					$("#buttonRight").removeClass('selectedButton');
+					$("#buttonLeft").addClass('selectedButton');
+				}
+				else if ( (player1.degree >= 90) || (player1.degree <= 270) ) {
+					self.selectedButton = "right";
+					$("#buttonLeft").removeClass('selectedButton');
+					$("#buttonRight").addClass('selectedButton');
+				}
+			}, 100);
+		};
+
+		this.pickButton = function() {
+			if (self.selectedButton === "left") {
+
+				$(".triangles").remove();
+				player1.createTriangle();
+
+				$(".uiContainer").css("opacity", "0");
+				clearInterval(theUI.buttonSelectorInterval);
+				
+				$(".status").remove();
+				game.multiPlayer = false;
+				game.start();
+
+			}
+			else if (self.selectedButton === "right") {
+
+				$(".triangles").remove();
+				player1.createTriangle();
+				player2.createTriangle();
+
+				$(".uiContainer").css("opacity", "0");
+				clearInterval(theUI.buttonSelectorInterval);
+
+				$(".status").remove();
+				game.multiPlayer = true;
+				game.start();
+
+			}
+		};
 	};
 	// end of function that build the interface
 
 
 	// Initialise
 	var game = new gameMaker(); // makes the game
+	var theUI = new uiMaker(); // makes the interface
 	var player1 = new triangleMaker(1); // makes player one
 	var player2 = new triangleMaker(2); // makes player two
 
-
+	player1.createTriangle();
+	theUI.buttonSelector();
 
 
 
@@ -314,10 +364,19 @@ $(document).ready(function() {
 		"keys"              : "s",
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){
-			player1.createTriangle();
+			$(".uiContainer").css("opacity", "0");
+			clearInterval(theUI.buttonSelectorInterval);
 			$(".status").remove();
 			game.multiPlayer = false;
 			game.start();
+		}
+	});
+
+	keyListener.register_combo({
+		"keys"              : "space",
+		"prevent_repeat"    : true,
+		"on_keydown"        : function(){
+			theUI.pickButton();
 		}
 	});
 
