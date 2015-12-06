@@ -42,8 +42,15 @@ body {
   z-index: 9000;
 }
 
+#score {
+  font-size: 32px;
+  margin: 20px 50px 0 0;
+  text-align: right;
+
+}
+
 #title {
-  margin-top: 15%;
+  margin-top: 10%;
   text-align: center;
   font-size: 64px;
 }

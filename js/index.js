@@ -109,6 +109,10 @@ $(document).ready(function() {
 		this.multiPlayer = false;
 		this.instance = 1;
 
+		this.scoreInterval = null;
+		this.score = 0;
+		this.hiScore = 0;
+
 
 		// Makes new block
 		this.makeBlock = function(position, blockId) {
@@ -217,6 +221,11 @@ $(document).ready(function() {
 						player1.degree = 0;
 						player2.degree = 0;
 						clearInterval(self.nowPlayingInterval);
+						clearInterval(self.scoreInterval);
+						if (self.score > self.hiScore) {
+							self.hiScore = self.score;
+						}
+						self.score = 0;
 
 						if (playerLose === 3) {
 							theUI.displayLoserMenu("Both");
@@ -270,6 +279,13 @@ $(document).ready(function() {
 				self.nowPlayingInterval = setInterval(function(){
 					self.spawnWall();
 				}, 1000);
+
+				if (self.multiPlayer !== true) {
+					self.scoreInterval = setInterval(function(){
+						self.score++;
+						$("#scoreNumber").html(self.score);
+					}, 100);
+				}
 			}
 		};
 
@@ -305,7 +321,8 @@ $(document).ready(function() {
 				$(".triangles").remove();
 				player1.createTriangle();
 
-				$(".uiContainer").css("opacity", "0");
+				$("#uiCenterContainer").css("opacity", "0");
+				$("#typeOfScore").html("Score");
 				clearInterval(theUI.buttonSelectorInterval);
 
 				$(".status").remove();
@@ -319,7 +336,8 @@ $(document).ready(function() {
 				player1.createTriangle();
 				player2.createTriangle();
 
-				$(".uiContainer").css("opacity", "0");
+				$("#uiCenterContainer").css("opacity", "0");
+				$("#score").css("opacity", "0");
 				clearInterval(theUI.buttonSelectorInterval);
 
 				$(".status").remove();
@@ -330,21 +348,27 @@ $(document).ready(function() {
 		};
 
 		this.displayMainMenu = function() {
-			$(".uiContainer").css("opacity", "1");
+			$("#uiCenterContainer").css("opacity", "1");
+			$("#typeOfScore").html("Hi-Score");
+			$("#scoreNumber").html(game.hiScore);
 			$("#title").html("Double Hexagon");
 			$("#buttonLeft").html("1-P");
 			$("#buttonRight").html("2-P");
 		};
 
 		this.displayLoserMenu = function(loser) {
-			$(".uiContainer").css("opacity", "1");
+			$("#uiCenterContainer").css("opacity", "1");
+			$("#typeOfScore").html("Hi-Score");
+			$("#scoreNumber").html(game.hiScore);
 			$("#title").html(loser + " loses.");
 			$("#buttonLeft").html("Retry");
 			$("#buttonRight").html("Exit");
 		};
 
 		this.displayCredit = function() {
-			$(".uiContainer").css("opacity", "1");
+			$("#uiCenterContainer").css("opacity", "1");
+			$("#typeOfScore").html("Hi-Score");
+			$("#scoreNumber").html(game.hiScore);
 			$("#title").html("Credit");
 			$("#buttonLeft").html("1-P");
 			$("#buttonRight").html("2-P");
@@ -385,7 +409,7 @@ $(document).ready(function() {
 		"keys"              : "s",
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){
-			$(".uiContainer").css("opacity", "0");
+			$("#uiCenterContainer").css("opacity", "0");
 			clearInterval(theUI.buttonSelectorInterval);
 			$(".status").remove();
 			game.multiPlayer = false;
