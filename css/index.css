@@ -43,14 +43,14 @@ body {
 }
 
 #title {
-  margin-top: 10%;
+  margin-top: 15%;
   text-align: center;
   font-size: 64px;
 }
 
 #buttonContainer {
   width: 50%;
-  margin:17% auto;
+  margin: 14% auto;
 }
 
 .button {

@@ -219,13 +219,13 @@ $(document).ready(function() {
 						clearInterval(self.nowPlayingInterval);
 
 						if (playerLose === 3) {
-							$(".instruction").prepend('<h1 class="status">You both lose.</h1>');
+							theUI.displayLoserMenu("Both");
 						}
 						else if (playerLose === 1) {
-							$(".instruction").prepend('<h1 class="status">Player 1 loses.</h1>');
+							theUI.displayLoserMenu("Player 1");
 						}
 						else if (playerLose === 2) {
-							$(".instruction").prepend('<h1 class="status">Player 2 loses.</h1>');
+							theUI.displayLoserMenu("Player 2");
 						}
 						
 					}
@@ -296,7 +296,7 @@ $(document).ready(function() {
 					$("#buttonLeft").removeClass('selectedButton');
 					$("#buttonRight").addClass('selectedButton');
 				}
-			}, 100);
+			}, 200);
 		};
 
 		this.pickButton = function() {
@@ -307,7 +307,7 @@ $(document).ready(function() {
 
 				$(".uiContainer").css("opacity", "0");
 				clearInterval(theUI.buttonSelectorInterval);
-				
+
 				$(".status").remove();
 				game.multiPlayer = false;
 				game.start();
@@ -327,6 +327,27 @@ $(document).ready(function() {
 				game.start();
 
 			}
+		};
+
+		this.displayMainMenu = function() {
+			$(".uiContainer").css("opacity", "1");
+			$("#title").html("Double Hexagon");
+			$("#buttonLeft").html("1-P");
+			$("#buttonRight").html("2-P");
+		};
+
+		this.displayLoserMenu = function(loser) {
+			$(".uiContainer").css("opacity", "1");
+			$("#title").html(loser + " loses.");
+			$("#buttonLeft").html("Retry");
+			$("#buttonRight").html("Exit");
+		};
+
+		this.displayCredit = function() {
+			$(".uiContainer").css("opacity", "1");
+			$("#title").html("Credit");
+			$("#buttonLeft").html("1-P");
+			$("#buttonRight").html("2-P");
 		};
 	};
 	// end of function that build the interface
@@ -381,27 +402,35 @@ $(document).ready(function() {
 	});
 
 	keyListener.register_combo({
+		"keys"              : "enter",
+		"prevent_repeat"    : true,
+		"on_keydown"        : function(){
+			theUI.pickButton();
+		}
+	});
+
+	keyListener.register_combo({
 		"keys"              : "q",
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){
-			player1.createTriangle();
-			player2.createTriangle();
-			$(".status").remove();
-			game.multiPlayer = true;
-			game.start();
+			theUI.displayMainMenu();
 		}
 	});
 
 	keyListener.register_combo({
 		"keys"              : "r",
 		"prevent_repeat"    : true,
-		"on_keydown"        : function(){game.animateBlock(0, 33);}
+		"on_keydown"        : function(){
+			theUI.displayLoserMenu("Player 1");
+		}
 	});
 
 	keyListener.register_combo({
 		"keys"              : "t",
 		"prevent_repeat"    : true,
-		"on_keydown"        : function(){game.makeBlock(0);}
+		"on_keydown"        : function(){
+			theUI.displayCreditMenu();
+		}
 	});
 
 	keyListener.register_combo({
