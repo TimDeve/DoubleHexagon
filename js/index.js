@@ -222,6 +222,7 @@ $(document).ready(function() {
 						player2.degree = 0;
 						clearInterval(self.nowPlayingInterval);
 						clearInterval(self.scoreInterval);
+						
 						if (self.score > self.hiScore) {
 							self.hiScore = self.score;
 						}
