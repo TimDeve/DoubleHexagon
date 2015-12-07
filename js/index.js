@@ -328,6 +328,7 @@ $(document).ready(function() {
 		var self = this;
 		this.selectedButton = "left"; // Default selected button
 		this.buttonSelectorInterval = null;
+		this.currentScreen = null;
 
 		this.buttonSelector = function() {
 			self.buttonSelectorInterval = setInterval(function(){
@@ -344,39 +345,42 @@ $(document).ready(function() {
 			}, 200);
 		};
 
+
 		this.pickButton = function() {
-			if (self.selectedButton === "left") {
 
-				$(".triangles").remove();
-				player1.createTriangle();
+			if (self.currentScreen === "main") {
 
-				$("#uiCenterContainer").css("opacity", "0");
-				$("#typeOfScore").html("Score");
-				clearInterval(theUI.buttonSelectorInterval);
-
-				$(".status").remove();
-				game.multiPlayer = false;
-				game.start();
+				if (self.selectedButton === "left") {
+					self.startXPmode(1);
+				}
+				else if (self.selectedButton === "right") {
+					self.startXPmode(2);
+				}
 
 			}
-			else if (self.selectedButton === "right") {
 
-				$(".triangles").remove();
-				player1.createTriangle();
-				player2.createTriangle();
+			else if (self.currentScreen === "loser") {
 
-				$("#uiCenterContainer").css("opacity", "0");
-				$("#score").css("opacity", "0");
-				clearInterval(theUI.buttonSelectorInterval);
+				if (self.selectedButton === "left") {
+					self.startXPmode("retry");
+				}
+				else if (self.selectedButton === "right") {
+					self.displayMainMenu();
+				}
 
-				$(".status").remove();
-				game.multiPlayer = true;
-				game.start();
+			}
+
+			else if (self.currentScreen === "credit") {
+
+
 
 			}
 		};
 
+
+
 		this.displayMainMenu = function() {
+			self.currentScreen = "main";
 			$("#uiCenterContainer").css("opacity", "1");
 			$("#typeOfScore").html("Hi-Score");
 			$("#scoreNumber").html(game.hiScore);
@@ -385,7 +389,9 @@ $(document).ready(function() {
 			$("#buttonRight").html("2-P");
 		};
 
+
 		this.displayLoserMenu = function(loser) {
+			self.currentScreen = "loser";
 			player1.createTriangle();
 			self.buttonSelector();
 			$("#uiCenterContainer").css("opacity", "1");
@@ -396,7 +402,9 @@ $(document).ready(function() {
 			$("#buttonRight").html("Exit");
 		};
 
+
 		this.displayCredit = function() {
+			self.currentScreen = "credit";
 			$("#uiCenterContainer").css("opacity", "1");
 			$("#typeOfScore").html("Hi-Score");
 			$("#scoreNumber").html(game.hiScore);
@@ -404,6 +412,42 @@ $(document).ready(function() {
 			$("#buttonLeft").html("1-P");
 			$("#buttonRight").html("2-P");
 		};
+
+
+
+		this.startXPmode = function(modeOrRetry) {
+			var mode = modeOrRetry;
+			$(".triangles").remove();
+			$(".status").remove();
+			clearInterval(theUI.buttonSelectorInterval);
+			player1.createTriangle();
+
+			if (mode === "retry") {
+				if (game.multiPlayer) {
+					mode = 2;
+				}
+				else if (!game.multiPlayer) {
+					mode = 1;
+				}
+			}
+			
+			if (mode === 2) {
+				player2.createTriangle();
+				$("#uiCenterContainer").css("opacity", "0");
+				$("#score").css("opacity", "0");
+				game.multiPlayer = true;
+			}
+			else if (mode === 1) {
+				$("#uiCenterContainer").css("opacity", "0");
+				$("#typeOfScore").html("Score");
+				game.multiPlayer = false;
+			}
+
+			game.start();
+
+		};
+
+		
 	};
 	// end of function that build the interface
 
@@ -415,6 +459,7 @@ $(document).ready(function() {
 	var player2 = new triangleMaker(2); // makes player two
 
 	player1.createTriangle();
+	theUI.displayMainMenu();
 	theUI.buttonSelector();
 
 
