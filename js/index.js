@@ -454,8 +454,8 @@ $(document).ready(function() {
 
 		};
 
-		createjs.Sound.registerSound("../sounds/POL-rocketman-short.ogg", "backgroundMusic");
-		createjs.Sound.registerSound("../sounds/GameOver.ogg", "gameOver");
+		createjs.Sound.registerSound("sounds/POL-rocketman-short.ogg", "backgroundMusic");
+		createjs.Sound.registerSound("sounds/GameOver.ogg", "gameOver");
 	};
 	// end of function that build the interface
 
@@ -521,7 +521,7 @@ $(document).ready(function() {
 		"keys"              : "e",
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){
-			createjs.Sound.registerSound("../sounds/POL-rocketman-short.ogg", "backgroundMusic");
+			createjs.Sound.registerSound("sounds/POL-rocketman-short.ogg", "backgroundMusic");
 		}
 	});
 
