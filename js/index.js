@@ -103,6 +103,7 @@ $(document).ready(function() {
 	// Builder function to create game object
 	var gameMaker = function() {
 		var self = this;
+		var numberOfLoser = 0;
 		this.blockCounter = 0; // Counter so there is no conflict between block ID
 		this.nowPlayingInterval = null; // Variable that will store the setInterval that create the blocks
 		this.nowPlaying = false; // Variable that determine if the game is currently running
@@ -169,6 +170,44 @@ $(document).ready(function() {
 		};
 
 
+
+		this.isLost = function(playerLose) {
+
+			game.instance++;
+			self.nowPlaying = false;
+			$(".triangles").remove();
+			$(".block").remove();
+			player1.degree = 0;
+			player2.degree = 0;
+			clearInterval(self.nowPlayingInterval);
+			clearInterval(self.scoreInterval);
+
+			if (self.score > self.hiScore) {
+				self.hiScore = self.score;
+			}
+			self.score = 0;
+
+
+			if (self.multiPlayer) {
+				
+				if (playerLose === 3) {
+					theUI.displayLoserMenu("Both");
+				}
+				else if (playerLose === 1) {
+
+					theUI.displayLoserMenu("Player 1");
+				}
+				else if (playerLose === 2) {
+					theUI.displayLoserMenu("Player 2");
+				}
+			}
+
+			else {
+				theUI.displayLoserMenu("Player 1");
+			}
+		};
+
+
 		// Function that wait a certain amount of time before checking if the triangle is in the same zone as a block, takes one argument:
 		// **blockIndex: the position of the block to check for colision, takes a number from 0 to 5
 		this.checkCollision = function(blockIndex) {
@@ -199,10 +238,12 @@ $(document).ready(function() {
 
 						else if ((player1.degree >= startPoint) && (player1.degree <= endPoint)) {
 							playerLose = 1;// set playerLose to 1 if player 1 loses
+							numberOfLoser++;
 						}
 
 						else if ((player2.degree >= startPoint) && (player2.degree <= endPoint)) {
 							playerLose = 2;// set playerLose to 2 if player 1 loses
+							numberOfLoser++;
 						}
 
 					}
@@ -213,37 +254,22 @@ $(document).ready(function() {
 						}
 					}
 
+					// Wait for 10 millisecond to check if there is two loosers on different block.
 					if (playerLose !== 0) {
-						game.instance++;
-						self.nowPlaying = false;
-						$(".triangles").remove();
-						$(".block").remove();
-						player1.degree = 0;
-						player2.degree = 0;
-						clearInterval(self.nowPlayingInterval);
-						clearInterval(self.scoreInterval);
+						setTimeout(function() {
+							if (numberOfLoser === 2) {
+								self.isLost(3);
+							}
+							else {
+								self.isLost(playerLose);
+							}
 
-						if (self.score > self.hiScore) {
-							self.hiScore = self.score;
-						}
-						self.score = 0;
-
-						if (playerLose === 3) {
-							theUI.displayLoserMenu("Both");
-						}
-						else if (playerLose === 1) {
-							theUI.displayLoserMenu("Player 1");
-						}
-						else if (playerLose === 2) {
-							theUI.displayLoserMenu("Player 2");
-						}
+						}, 10);
 						
 					}
-					
-
 				}
 
-			}, 2350);
+			}, 2300);
 		};
 
 
@@ -266,7 +292,7 @@ $(document).ready(function() {
 					self.checkCollision(i); // check a bit later to see if it it's anything
 					
 				}
-				debugger;
+
 			}
 		};
 
@@ -276,6 +302,7 @@ $(document).ready(function() {
 			// check that the game is not already launched
 			if (!self.nowPlaying) {
 				self.nowPlaying = true; // turn on the game is now playing switch
+				numberOfLoser = 0;
 
 				// start spawning wall every second until it's stopped
 				self.nowPlayingInterval = setInterval(function(){
@@ -359,6 +386,8 @@ $(document).ready(function() {
 		};
 
 		this.displayLoserMenu = function(loser) {
+			player1.createTriangle();
+			self.buttonSelector();
 			$("#uiCenterContainer").css("opacity", "1");
 			$("#typeOfScore").html("Hi-Score");
 			$("#scoreNumber").html(game.hiScore);
