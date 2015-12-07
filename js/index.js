@@ -182,6 +182,9 @@ $(document).ready(function() {
 			clearInterval(self.nowPlayingInterval);
 			clearInterval(self.scoreInterval);
 
+			createjs.Sound.stop("backgroundMusic");
+			createjs.Sound.play("gameOver");
+
 			if (self.score > self.hiScore) {
 				self.hiScore = self.score;
 			}
@@ -315,6 +318,8 @@ $(document).ready(function() {
 						$("#scoreNumber").html(self.score);
 					}, 100);
 				}
+
+				createjs.Sound.play("backgroundMusic", {loop:-1});
 			}
 		};
 
@@ -329,6 +334,7 @@ $(document).ready(function() {
 		this.selectedButton = "left"; // Default selected button
 		this.buttonSelectorInterval = null;
 		this.currentScreen = null;
+
 
 		this.buttonSelector = function() {
 			self.buttonSelectorInterval = setInterval(function(){
@@ -382,6 +388,7 @@ $(document).ready(function() {
 		this.displayMainMenu = function() {
 			self.currentScreen = "main";
 			$("#uiCenterContainer").css("opacity", "1");
+			$("#score").css("opacity", "1");
 			$("#typeOfScore").html("Hi-Score");
 			$("#scoreNumber").html(game.hiScore);
 			$("#title").html("Double Hexagon");
@@ -447,7 +454,8 @@ $(document).ready(function() {
 
 		};
 
-		
+		createjs.Sound.registerSound("../sounds/POL-rocketman-short.ogg", "backgroundMusic");
+		createjs.Sound.registerSound("../sounds/GameOver.ogg", "gameOver");
 	};
 	// end of function that build the interface
 
@@ -510,45 +518,30 @@ $(document).ready(function() {
 	});
 
 	keyListener.register_combo({
-		"keys"              : "q",
+		"keys"              : "e",
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){
-			theUI.displayMainMenu();
+			createjs.Sound.registerSound("../sounds/POL-rocketman-short.ogg", "backgroundMusic");
 		}
 	});
+
+
 
 	keyListener.register_combo({
 		"keys"              : "r",
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){
-			theUI.displayLoserMenu("Player 1");
+			console.log('test');
+			createjs.Sound.play("backgroundMusic", {loop:-1});
 		}
 	});
+
 
 	keyListener.register_combo({
 		"keys"              : "t",
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){
-			theUI.displayCreditMenu();
-		}
-	});
-
-	keyListener.register_combo({
-		"keys"              : "y",
-		"prevent_repeat"    : true,
-		"on_keydown"        : function(){
-			var wallArray = [1,1,1,1,1,1];
-
-			for (i = 0; i < wallArray.length; i++) {
-
-				if (wallArray[i] === 1) {
-					game.blockCounter++;
-					var thisBlock = game.blockCounter;
-
-					game.makeBlock(i, thisBlock);
-					
-				}
-			}
+			createjs.Sound.stop("backgroudMusic");
 		}
 
 	});
