@@ -222,7 +222,7 @@ $(document).ready(function() {
 						player2.degree = 0;
 						clearInterval(self.nowPlayingInterval);
 						clearInterval(self.scoreInterval);
-						
+
 						if (self.score > self.hiScore) {
 							self.hiScore = self.score;
 						}
@@ -266,6 +266,7 @@ $(document).ready(function() {
 					self.checkCollision(i); // check a bit later to see if it it's anything
 					
 				}
+				debugger;
 			}
 		};
 

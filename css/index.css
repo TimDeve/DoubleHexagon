@@ -39,6 +39,17 @@ body {
   }
 }
 
+@keyframes animateTheBoardRotate {
+  0% {
+    transform: rotate(0) scale(1.6);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.6);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.6);
+  }
+}
 
 .mainContainer {
   position: relative;
@@ -49,6 +60,10 @@ body {
   border-radius: 50px;
   overflow: hidden;
   animation: hue-rotate 10s linear infinite;
+}
+
+#svgLoader {
+  visibility: hidden;
 }
 
 .uiContainer {
@@ -105,10 +120,10 @@ body {
   margin: 0 auto 0 auto;
 }
 
-.animateTheBoard {
-  animation: animateTheBoard 10s linear infinite;
+/*.animateTheBoard {
+  animation: animateTheBoardRotate 10s linear infinite;
 }
-
+*/
 .centerHexagon {
   position: absolute;
   background: url("../img/centerhexagon.svg");
@@ -145,6 +160,9 @@ body {
 
 .block {
   position: absolute;
+  width: 816px;
+  height: 73px;
+  /*background-color: white;*/
 }
 
 .blockPosition0 {
