@@ -1,54 +1,16 @@
+
+/* Load the pixel font so it can be used */
 @font-face {
     font-family: "visitor1";
     src: url(../fonts/visitor1.ttf) format("truetype");
 }
 
+
+/* ---General--- */
 body {
   background: black;
   color: rgba(255,170,170, 0.9);
   font-family: "visitor1",sans-serif;
-}
-
-@keyframes hue-rotate {
-  from {
-    -webkit-filter: hue-rotate(0);
-    -moz-filter: hue-rotate(0);
-    -ms-filter: hue-rotate(0);
-    filter: hue-rotate(0);
-  }
-  to {
-    -webkit-filter: hue-rotate(360deg);
-    -moz-filter: hue-rotate(360deg);
-    -ms-filter: hue-rotate(360deg);
-    filter: hue-rotate(360deg);
-  }
-}
-
-@keyframes animateTheBoard {
-  0% {
-    transform: skewX(0deg) scale(1) rotate(0);
-  }
-  25% {
-    transform: skewX(10deg) scale(1.25) rotate(-5deg);
-  }
-  75% {
-    transform: skewX(-5deg) scale(1.40) rotate(10deg);
-  }
-  100% {
-    transform: skewX(0deg) scale(1) rotate(0);
-  }
-}
-
-@keyframes animateTheBoardRotate {
-  0% {
-    transform: rotate(0) scale(1.6);
-  }
-  50% {
-    transform: rotate(180deg) scale(1.6);
-  }
-  100% {
-    transform: rotate(360deg) scale(1.6);
-  }
 }
 
 .mainContainer {
@@ -62,10 +24,11 @@ body {
   animation: hue-rotate 10s linear infinite;
 }
 
-#svgLoader {
-  visibility: hidden;
-}
+/* ---End of General--- */
 
+
+
+/* ---Interface--- */
 .uiContainer {
   position: absolute;
   width: 1024px;
@@ -110,7 +73,11 @@ body {
 .selectedButton {
   box-shadow: 0px 0px 10px 2px rgba(255,170,170, 0.9), 0px 0px 10px 2px rgba(255,170,170, 0.9) inset;
 }
+/* --- End of Interface--- */
 
+
+
+/* ---Game--- */
 .gameContainer {
   position: relative;
   background-color: darkgrey;
@@ -121,9 +88,10 @@ body {
 }
 
 /*.animateTheBoard {
-  animation: animateTheBoardRotate 10s linear infinite;
+  animation: animateTheBoard 10s linear infinite;
 }
 */
+
 .centerHexagon {
   position: absolute;
   background: url("../img/centerhexagon.svg");
@@ -162,7 +130,6 @@ body {
   position: absolute;
   width: 816px;
   height: 73px;
-  /*background-color: white;*/
 }
 
 .blockPosition0 {
@@ -199,9 +166,51 @@ body {
   top: 680px;
   transform: rotate(240deg);
 }
+/* ---End of Game--- */
 
-.instruction {
-  margin: 0 auto 0 auto;
-  width: 768px;
-  color: white;
+
+
+/* ---Animations--- */
+
+@keyframes hue-rotate {
+  from {
+    -webkit-filter: hue-rotate(0);
+    -moz-filter: hue-rotate(0);
+    -ms-filter: hue-rotate(0);
+    filter: hue-rotate(0);
+  }
+  to {
+    -webkit-filter: hue-rotate(360deg);
+    -moz-filter: hue-rotate(360deg);
+    -ms-filter: hue-rotate(360deg);
+    filter: hue-rotate(360deg);
+  }
 }
+
+@keyframes animateTheBoard {
+  0% {
+    transform: skewX(0deg) scale(1) rotate(0);
+  }
+  25% {
+    transform: skewX(10deg) scale(1.25) rotate(-5deg);
+  }
+  75% {
+    transform: skewX(-5deg) scale(1.40) rotate(10deg);
+  }
+  100% {
+    transform: skewX(0deg) scale(1) rotate(0);
+  }
+}
+
+@keyframes animateTheBoardRotate {
+  0% {
+    transform: rotate(0) scale(1.6);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.6);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.6);
+  }
+}
+/* ---End of Animations--- */

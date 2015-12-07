@@ -336,6 +336,7 @@ $(document).ready(function() {
 		this.currentScreen = null;
 
 
+		// function that check the current position of the triangle to determine which button it is currently selecting
 		this.buttonSelector = function() {
 			self.buttonSelectorInterval = setInterval(function(){
 				if ( (player1.degree <= 90) || (player1.degree >= 270) ) {
@@ -352,6 +353,8 @@ $(document).ready(function() {
 		};
 
 
+
+		// Function  to launch the right mode depending on the context
 		this.pickButton = function() {
 
 			if (self.currentScreen === "main") {
@@ -378,13 +381,14 @@ $(document).ready(function() {
 
 			else if (self.currentScreen === "credit") {
 
-
+				// To create
 
 			}
 		};
 
 
 
+		// Build the main menu when called
 		this.displayMainMenu = function() {
 			self.currentScreen = "main";
 			$("#uiCenterContainer").css("opacity", "1");
@@ -397,6 +401,7 @@ $(document).ready(function() {
 		};
 
 
+		// Build the loser menu when called
 		this.displayLoserMenu = function(loser) {
 			self.currentScreen = "loser";
 			player1.createTriangle();
@@ -404,24 +409,20 @@ $(document).ready(function() {
 			$("#uiCenterContainer").css("opacity", "1");
 			$("#typeOfScore").html("Hi-Score");
 			$("#scoreNumber").html(game.hiScore);
-			$("#title").html(loser + " loses.");
+			$("#title").html(loser + " loses");
 			$("#buttonLeft").html("Retry");
 			$("#buttonRight").html("Exit");
 		};
 
 
+		// Build the main menu when called
 		this.displayCredit = function() {
-			self.currentScreen = "credit";
-			$("#uiCenterContainer").css("opacity", "1");
-			$("#typeOfScore").html("Hi-Score");
-			$("#scoreNumber").html(game.hiScore);
-			$("#title").html("Credit");
-			$("#buttonLeft").html("1-P");
-			$("#buttonRight").html("2-P");
+			// to build
 		};
 
 
-
+		// function that lauch the game when a button is chosen, accepts one argument:
+		// **modeOrRetry: takes either 1 for 1 player mode, 2 for 2 player mode, or "retry" to lauch the last mode used
 		this.startXPmode = function(modeOrRetry) {
 			var mode = modeOrRetry;
 			$(".triangles").remove();
@@ -454,6 +455,8 @@ $(document).ready(function() {
 
 		};
 
+
+		// Preload sounds
 		createjs.Sound.registerSound("sounds/POL-rocketman-short.ogg", "backgroundMusic");
 		createjs.Sound.registerSound("sounds/GameOver.ogg", "gameOver");
 	};
@@ -466,9 +469,9 @@ $(document).ready(function() {
 	var player1 = new triangleMaker(1); // makes player one
 	var player2 = new triangleMaker(2); // makes player two
 
-	player1.createTriangle();
-	theUI.displayMainMenu();
-	theUI.buttonSelector();
+	player1.createTriangle(); // Create the triangle for selection
+	theUI.displayMainMenu(); // Display the main menu
+	theUI.buttonSelector(); // Launch the setInterval that check the current button choice
 
 
 
