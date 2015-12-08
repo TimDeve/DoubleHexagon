@@ -74,7 +74,6 @@ body {
   display: block;
   max-width: 250px;
   margin: 300px auto 0 auto;
-  /*clear: both;*/
 }
 
 .selectedButton {
@@ -104,11 +103,6 @@ input {
   height: 768px;
   margin: 0 auto 0 auto;
 }
-
-/*.animateTheBoard {
-  animation: animateTheBoard 10s linear infinite;
-}
-*/
 
 .centerHexagon {
   position: absolute;
@@ -205,30 +199,4 @@ input {
   }
 }
 
-@keyframes animateTheBoard {
-  0% {
-    transform: skewX(0deg) scale(1) rotate(0);
-  }
-  25% {
-    transform: skewX(10deg) scale(1.25) rotate(-5deg);
-  }
-  75% {
-    transform: skewX(-5deg) scale(1.40) rotate(10deg);
-  }
-  100% {
-    transform: skewX(0deg) scale(1) rotate(0);
-  }
-}
-
-@keyframes animateTheBoardRotate {
-  0% {
-    transform: rotate(0) scale(1.6);
-  }
-  50% {
-    transform: rotate(180deg) scale(1.6);
-  }
-  100% {
-    transform: rotate(360deg) scale(1.6);
-  }
-}
 /* ---End of Animations--- */
