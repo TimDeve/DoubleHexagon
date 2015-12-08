@@ -327,7 +327,8 @@ $(document).ready(function() {
 	};
 	// end of builder function to creat game object
 	
-	
+
+
 	// function that build the interface
 	var uiMaker = function() {
 		var self = this;
@@ -565,6 +566,24 @@ $(document).ready(function() {
 		// Preload sounds
 		createjs.Sound.registerSound("sounds/POL-rocketman-short.ogg", "backgroundMusic");
 		createjs.Sound.registerSound("sounds/GameOver.ogg", "gameOver");
+
+		// Creates event listener to pick a mode
+		keyListener.register_combo({
+			"keys"              : "space",
+			"prevent_repeat"    : true,
+			"on_keydown"        : function(){
+				theUI.pickButton();
+			}
+		});
+
+		keyListener.register_combo({
+			"keys"              : "enter",
+			"prevent_repeat"    : true,
+			"on_keydown"        : function(){
+				theUI.pickButton();
+			}
+		});
+
 	};
 	// end of function that build the interface
 
@@ -575,83 +594,8 @@ $(document).ready(function() {
 	var player1 = new triangleMaker(1); // makes player one
 	var player2 = new triangleMaker(2); // makes player two
 
+	// Check if it is a shared game, if not launch the game normally
 	theUI.checkIfShared();
-	// theUI.displayToShareMenu();
 
-
-
-	// testing
-	
-
-	var testWall = function(){
-			var wallArray = [1,1,1,1,1,1];
-
-			for (i = 0; i < wallArray.length; i++) {
-
-				if (wallArray[i] === 1) {
-					game.blockCounter++;
-					var thisBlock = game.blockCounter;
-
-					game.makeBlock(i, thisBlock);
-					
-				}
-			}
-		};
-
-	// testWall();
-	keyListener.register_combo({
-		"keys"              : "s",
-		"prevent_repeat"    : true,
-		"on_keydown"        : function(){
-				theUI.checkIfShared();
-		}
-	});
-
-	keyListener.register_combo({
-		"keys"              : "space",
-		"prevent_repeat"    : true,
-		"on_keydown"        : function(){
-			theUI.pickButton();
-		}
-	});
-
-	keyListener.register_combo({
-		"keys"              : "enter",
-		"prevent_repeat"    : true,
-		"on_keydown"        : function(){
-			theUI.pickButton();
-		}
-	});
-
-	keyListener.register_combo({
-		"keys"              : "e",
-		"prevent_repeat"    : true,
-		"on_keydown"        : function(){
-			createjs.Sound.registerSound("sounds/POL-rocketman-short.ogg", "backgroundMusic");
-		}
-	});
-
-
-
-	keyListener.register_combo({
-		"keys"              : "r",
-		"prevent_repeat"    : true,
-		"on_keydown"        : function(){
-			console.log('test');
-			createjs.Sound.play("backgroundMusic", {loop:-1});
-		}
-	});
-
-
-	keyListener.register_combo({
-		"keys"              : "t",
-		"prevent_repeat"    : true,
-		"on_keydown"        : function(){
-			createjs.Sound.stop("backgroudMusic");
-		}
-
-	});
-
-	
 
 });
