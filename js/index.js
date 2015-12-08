@@ -158,7 +158,7 @@ $(document).ready(function() {
 			var thisId = "#block"+blockNumber;
 			
 			$(thisId).velocity({
-				"top": "384px",
+				"top": "370px",
 				"left": "512px",
 				"height": "30px",
 				"width": "0"
@@ -433,7 +433,7 @@ $(document).ready(function() {
 			$("#title").html("My High Score!");
 			$("#buttonLeft").html(convertedName);
 			$("#buttonRight").html(convertedScore);
-			$("#buttonBottom").html("Think you can you do better?");
+			$("#buttonBottom").html("Think you can do better?");
 		};
 
 
