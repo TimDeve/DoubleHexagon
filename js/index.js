@@ -170,7 +170,7 @@ $(document).ready(function() {
 		};
 
 
-
+		// Function to be launched when the game is lost
 		this.isLost = function(playerLose) {
 
 			game.instance++;
@@ -339,15 +339,49 @@ $(document).ready(function() {
 		// function that check the current position of the triangle to determine which button it is currently selecting
 		this.buttonSelector = function() {
 			self.buttonSelectorInterval = setInterval(function(){
-				if ( (player1.degree <= 90) || (player1.degree >= 270) ) {
+				if ( ((player1.degree >= 0) && (player1.degree <= 90)) ||  ((player1.degree >= 330) && (player1.degree <= 360)) ) {
 					self.selectedButton = "left";
 					$("#buttonRight").removeClass('selectedButton');
+					$("#buttonBottom").removeClass('selectedButton');
 					$("#buttonLeft").addClass('selectedButton');
 				}
-				else if ( (player1.degree >= 90) || (player1.degree <= 270) ) {
+				else if ( (player1.degree >= 90) && (player1.degree <= 210) ) {
 					self.selectedButton = "right";
 					$("#buttonLeft").removeClass('selectedButton');
+					$("#buttonBottom").removeClass('selectedButton');
 					$("#buttonRight").addClass('selectedButton');
+				}
+				else if ( (player1.degree >= 210) && (player1.degree <= 270) ) {
+
+					if ((self.currentScreen === "loser") && !game.multiPlayer) {
+						self.selectedButton = "bottom";
+						$("#buttonLeft").removeClass('selectedButton');
+						$("#buttonRight").removeClass('selectedButton');
+						$("#buttonBottom").addClass('selectedButton');
+					}
+					else {
+						self.selectedButton = "right";
+						$("#buttonLeft").removeClass('selectedButton');
+						$("#buttonBottom").removeClass('selectedButton');
+						$("#buttonRight").addClass('selectedButton');
+					}
+
+				}
+				else if ( (player1.degree >= 270) && (player1.degree <= 330) ) {
+
+					if ( (self.currentScreen === "loser") && !game.multiPlayer) {
+						self.selectedButton = "bottom";
+						$("#buttonLeft").removeClass('selectedButton');
+						$("#buttonRight").removeClass('selectedButton');
+						$("#buttonBottom").addClass('selectedButton');
+					}
+					else {
+						self.selectedButton = "left";
+						$("#buttonRight").removeClass('selectedButton');
+						$("#buttonBottom").removeClass('selectedButton');
+						$("#buttonLeft").addClass('selectedButton');
+					}
+
 				}
 			}, 200);
 		};
@@ -376,16 +410,19 @@ $(document).ready(function() {
 				else if (self.selectedButton === "right") {
 					self.displayMainMenu();
 				}
+				else if (self.selectedButton === "bottom") {
+					self.displayToShareMenu();
+				}
 
 			}
 
-			else if (self.currentScreen === "credit") {
+			else if (self.currentScreen === "toShare") {
 
-				// To create
+				self.displayMainMenu();
 
 			}
 
-			else if (self.currentScreen === "share") {
+			else if (self.currentScreen === "shared") {
 
 				player1.createTriangle(); // Create the triangle for selection
 				theUI.displayMainMenu(); // Display the main menu
@@ -400,6 +437,7 @@ $(document).ready(function() {
 		this.displayMainMenu = function() {
 			self.currentScreen = "main";
 			$("#uiCenterContainer").css("opacity", "1");
+			$(".triangles").show();
 			$("#score").css("opacity", "1");
 			$("#typeOfScore").html("Hi-Score");
 			$("#scoreNumber").html(game.hiScore);
@@ -421,25 +459,40 @@ $(document).ready(function() {
 			$("#title").html(loser + " loses");
 			$("#buttonLeft").html("Retry");
 			$("#buttonRight").html("Exit");
-		};
 
+			if (!game.multiPlayer) {
+				$("#buttonBottom").show();
+				$("#buttonBottom").html("Share your Hi&#8209;Score");
+			}
+		};
 
 		// Build the share menu when called
-		this.displayShareMenu = function(name, score) {
-			var convertedName = atob(decodeURIComponent(name));
-			var convertedScore = atob(decodeURIComponent(score));
-			self.currentScreen = "share";
+		this.displayToShareMenu = function() {
+			var urlToShare = window.location.href.split("?")[0];
+			urlToShare = urlToShare + "?score=";
+			urlToShare = urlToShare + btoa(game.hiScore);
+			$(".triangles").hide();
+			self.currentScreen = "toShare";
 			$("#uiCenterContainer").css("opacity", "1");
-			$("#title").html("My High Score!");
-			$("#buttonLeft").html(convertedName);
-			$("#buttonRight").html(convertedScore);
-			$("#buttonBottom").html("Think you can do better?");
+			$("#score").css("opacity", "1");
+			$("#typeOfScore").html("Hi-Score");
+			$("#scoreNumber").html(game.hiScore);
+			$("#title").html("Share your Hi-Score!");
+			$("#buttonLeft").html("<input type='text' size='10' value='"+urlToShare+"'>");
+			$("#buttonRight").html("< Copy this");
+			$("#buttonBottom").html("Send the url to your friends!");
 		};
 
 
-		// Build the main menu when called
-		this.displayCredit = function() {
-			// to build
+		// Build the shared menu when called
+		this.displaySharedMenu = function(score) {
+			var convertedScore = atob(decodeURIComponent(score));
+			self.currentScreen = "shared";
+			$("#uiCenterContainer").css("opacity", "1");
+			$("#title").html("High Score!");
+			$("#buttonLeft").html("My score");
+			$("#buttonRight").html(convertedScore);
+			$("#buttonBottom").html("Think you can do better?");
 		};
 
 
@@ -478,7 +531,8 @@ $(document).ready(function() {
 		};
 
 
-
+		// get variable from the url, takes one argument:
+		// **request: the variable you want ie:"name"
 		this.getUrlData = function(request) {
 			var GET = {};
 			var query = window.location.search.substring(1).split("&");
@@ -494,12 +548,11 @@ $(document).ready(function() {
 		};
 
 
-
+		// Check if url page url is a shared url I not start the game normally
 		this.checkIfShared = function() {
-			if (self.getUrlData("name") !== undefined) {
-				var thisName = self.getUrlData("name");
+			if (self.getUrlData("score") !== undefined) {
 				var thisScore = self.getUrlData("score");
-				self.displayShareMenu(thisName, thisScore);
+				self.displaySharedMenu(thisScore);
 			}
 			else {
 				player1.createTriangle(); // Create the triangle for selection
@@ -507,6 +560,7 @@ $(document).ready(function() {
 				theUI.buttonSelector(); // Launch the setInterval that check the current button choice
 			}
 		};
+
 
 		// Preload sounds
 		createjs.Sound.registerSound("sounds/POL-rocketman-short.ogg", "backgroundMusic");
@@ -522,6 +576,7 @@ $(document).ready(function() {
 	var player2 = new triangleMaker(2); // makes player two
 
 	theUI.checkIfShared();
+	// theUI.displayToShareMenu();
 
 
 
