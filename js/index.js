@@ -384,6 +384,14 @@ $(document).ready(function() {
 				// To create
 
 			}
+
+			else if (self.currentScreen === "share") {
+
+				player1.createTriangle(); // Create the triangle for selection
+				theUI.displayMainMenu(); // Display the main menu
+				theUI.buttonSelector(); // Launch the setInterval that check the current button choice
+
+			}
 		};
 
 
@@ -398,6 +406,7 @@ $(document).ready(function() {
 			$("#title").html("Double Hexagon");
 			$("#buttonLeft").html("1-P");
 			$("#buttonRight").html("2-P");
+			$("#buttonBottom").hide();
 		};
 
 
@@ -412,6 +421,19 @@ $(document).ready(function() {
 			$("#title").html(loser + " loses");
 			$("#buttonLeft").html("Retry");
 			$("#buttonRight").html("Exit");
+		};
+
+
+		// Build the share menu when called
+		this.displayShareMenu = function(name, score) {
+			var convertedName = atob(decodeURIComponent(name));
+			var convertedScore = atob(decodeURIComponent(score));
+			self.currentScreen = "share";
+			$("#uiCenterContainer").css("opacity", "1");
+			$("#title").html("My High Score!");
+			$("#buttonLeft").html(convertedName);
+			$("#buttonRight").html(convertedScore);
+			$("#buttonBottom").html("Think you can you do better?");
 		};
 
 
@@ -456,6 +478,36 @@ $(document).ready(function() {
 		};
 
 
+
+		this.getUrlData = function(request) {
+			var GET = {};
+			var query = window.location.search.substring(1).split("&");
+			for (var i = 0, max = query.length; i < max; i++)
+			{
+			    if (query[i] === "") // check for trailing & with no param
+			        continue;
+
+			    var param = query[i].split("=");
+			    GET[decodeURIComponent(param[0])] = decodeURIComponent(param[1] || "");
+			}
+			return GET[request];
+		};
+
+
+
+		this.checkIfShared = function() {
+			if (self.getUrlData("name") !== undefined) {
+				var thisName = self.getUrlData("name");
+				var thisScore = self.getUrlData("score");
+				self.displayShareMenu(thisName, thisScore);
+			}
+			else {
+				player1.createTriangle(); // Create the triangle for selection
+				theUI.displayMainMenu(); // Display the main menu
+				theUI.buttonSelector(); // Launch the setInterval that check the current button choice
+			}
+		};
+
 		// Preload sounds
 		createjs.Sound.registerSound("sounds/POL-rocketman-short.ogg", "backgroundMusic");
 		createjs.Sound.registerSound("sounds/GameOver.ogg", "gameOver");
@@ -469,13 +521,13 @@ $(document).ready(function() {
 	var player1 = new triangleMaker(1); // makes player one
 	var player2 = new triangleMaker(2); // makes player two
 
-	player1.createTriangle(); // Create the triangle for selection
-	theUI.displayMainMenu(); // Display the main menu
-	theUI.buttonSelector(); // Launch the setInterval that check the current button choice
+	theUI.checkIfShared();
 
 
 
 	// testing
+	
+
 	var testWall = function(){
 			var wallArray = [1,1,1,1,1,1];
 
@@ -496,11 +548,7 @@ $(document).ready(function() {
 		"keys"              : "s",
 		"prevent_repeat"    : true,
 		"on_keydown"        : function(){
-			$("#uiCenterContainer").css("opacity", "0");
-			clearInterval(theUI.buttonSelectorInterval);
-			$(".status").remove();
-			game.multiPlayer = false;
-			game.start();
+				theUI.checkIfShared();
 		}
 	});
 
