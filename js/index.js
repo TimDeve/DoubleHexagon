@@ -457,7 +457,7 @@ $(document).ready(function() {
 			$("#uiCenterContainer").css("opacity", "1");
 			$("#typeOfScore").html("Hi-Score");
 			$("#scoreNumber").html(game.hiScore);
-			$("#title").html(loser + " loses");
+			$("#title").html("Loser: " + loser);
 			$("#buttonLeft").html("Retry");
 			$("#buttonRight").html("Exit");
 

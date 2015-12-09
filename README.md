@@ -14,10 +14,6 @@ You are one of the triangle, use "left" & "right" for player 1 and "d" & "f" for
 * The game needs to be playable by two player
 * The project should not use dedicated library for game making
 
-### Some notes about the project
-
-[PLACEHOLDER]
-
 ### Technologies
 Double Hexagon is build with HTML/CSS and Javascript, it leverage the following librairies:
 
