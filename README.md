@@ -23,7 +23,7 @@ Double Hexagon is build with HTML/CSS and Javascript, it leverage the following 
 * [SoundJS](http://createjs.com/soundjs)
 
 ### Resources
-Any ressources used where either created by hand or are free of right and duly credited.
+Any ressources used were either created by hand or are free of right and duly credited.
 
 ### Credits
 Double Hexagon by Timothée Dévé
