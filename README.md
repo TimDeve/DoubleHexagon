@@ -7,7 +7,7 @@
 Double Hexagon is a clone of [(Super) Hexagon](http://terrycavanaghgames.com/hexagon/) for two players. It was build as a first Javascript project during my Web Development Immersive at [General Assembly London](https://generalassemb.ly/). 
 
 ### How to play
-You are one of the triangle, use "left" & "right" for player 1 and "d" & "f" for player 2 to rotate around the central hexagon. Avoid the walls. Simple. A hosted version is available [here](http://timdeve.github.io/projects/DoubleHexagon/index.html).
+You are one of the triangle, use "left" & "right" for player 1 and "d" & "f" for player 2 to rotate around the central hexagon. Avoid the walls. Simple. A hosted version is available [here](http://doublehexagon.do.timdeve.com/)
 
 ### The Project requirements
 * Display a game in the browser
