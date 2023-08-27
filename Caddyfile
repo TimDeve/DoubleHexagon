@@ -1,0 +1,9 @@
+{
+  auto_https off
+}
+
+http://:8080
+
+root * static
+file_server
+
